@@ -1,9 +1,12 @@
 import React from "react"
+import {Calculator} from "./components/Calculator.page";
+import "./App.scss"
+
 
 const App: React.FC = () => {
     return (
-        <div>
-            INIT
+        <div className="app">
+            <Calculator/>
         </div>
     )
 }
