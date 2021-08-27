@@ -13,3 +13,18 @@
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 7px;
 }
+
+.display {
+  background: #fff;
+  border-radius: 5px;
+  font-size: 32px;
+  grid-column-end: span 4;
+  color: #333;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  p {
+    margin-right: 10px;
+  }
+}
