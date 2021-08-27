@@ -18,7 +18,7 @@ export const Button: React.FC<Props> = (
         label,
         position,
         width,
-        type = ButtonType.Operative
+        type = ButtonType.Operator
     }
 ) => {
 
