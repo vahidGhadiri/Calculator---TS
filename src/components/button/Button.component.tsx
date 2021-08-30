@@ -3,8 +3,8 @@ import style from "./Button.module.scss"
 
 import {ButtonType} from "../../config/types"
 
-interface Props {
-    type?: ButtonType
+type Props = React.HTMLProps<HTMLButtonElement> & {
+    buttonType?: ButtonType
     label: string
     position?: [x: number, y: number]
     width?: number
@@ -18,7 +18,8 @@ export const Button: React.FC<Props> = (
         label,
         position,
         width,
-        type = ButtonType.Operator
+        buttonType = ButtonType.Operator,
+        onClick
     }
 ) => {
 
@@ -29,14 +30,16 @@ export const Button: React.FC<Props> = (
     }
     if (width) styles.gridColumnEnd = `span ${width}`
     if (height) styles.gridRowStart = `span ${height}`
-    if (type === ButtonType.Numeric) {
+    if (buttonType === ButtonType.Numeric) {
         styles.backgroundColor = "#e48900"
         styles.color = "#000"
     }
 
     return <button
-        className={`${type === ButtonType.Numeric && style.numericBtn} ${style.button}`}
-        style={styles}>
+        className={`${buttonType === ButtonType.Numeric && style.numericBtn} ${style.button}`}
+        style={styles}
+        onClick={onClick}
+    >
         {label}
     </button>
 }

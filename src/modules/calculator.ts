@@ -1,7 +1,7 @@
 import {CalculatorInput, CalculatorState, InputType, Operation, OperationsBuilder, OperatorType} from "../config/types";
 
 
-const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder => {
+export const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder => {
     return inputs.reduce<OperationsBuilder>((builder, input) => {
         switch (input.type) {
             case InputType.Numeric:
@@ -28,7 +28,7 @@ const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder
     }, {operations: [], working: {operator: OperatorType.Add, value: 0}})
 }
 
-const getTotal = (operations: Array<Operation>): number =>
+export const getTotal = (operations: Array<Operation>): number =>
     operations.reduce<number>((sum, operations) => {
         switch (operations.operator) {
             case OperatorType.Add:
@@ -40,7 +40,7 @@ const getTotal = (operations: Array<Operation>): number =>
         }
     }, 0)
 
-const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
+export const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
     const builder = getOperationsBuilder(inputs)
     const {operations} = builder
     const lastOperation = operations.length ? operations[operations.length - 1] : null
