@@ -14,7 +14,7 @@ test("Generate operation", () => {
     const operations: Array<Operation> = [
         {operator: OperatorType.Add, value: 12},
         {operator: OperatorType.Add, value: 3},
-        {operator: OperatorType.Equals, value: 15},
+        {operator: OperatorType.Equals, value: 0},
     ]
 
     expect(Calculator.getOperationsBuilder(inputs).operations).toEqual(operations)
@@ -37,11 +37,11 @@ test("Derives display value upon numerical value", () => {
         {type: InputType.Operator, operator: OperatorType.Equals},
     ]
     const state = Calculator.getState(inputs)
-    expect(state.displayValue).toEqual(3)
+    expect(state.displayValue).toEqual(15)
 })
 
 
-test("Derives final state", () => {
+test("Derives final state (with addition)", () => {
     const inputs: Array<CalculatorInput> = [
         {type: InputType.Numeric, value: 1},
         {type: InputType.Numeric, value: 2},
@@ -54,3 +54,18 @@ test("Derives final state", () => {
     expect(state.displayValue).toEqual(15)
 })
 
+
+test("Derives final state (with addition and subtraction)", () => {
+    const inputs: Array<CalculatorInput> = [
+        {type: InputType.Numeric, value: 1},
+        {type: InputType.Numeric, value: 2},
+        {type: InputType.Operator, operator: OperatorType.Add},
+        {type: InputType.Numeric, value: 3},
+        {type: InputType.Operator, operator: OperatorType.Subtract},
+        {type: InputType.Numeric, value: 5},
+        {type: InputType.Operator, operator: OperatorType.Equals},
+    ]
+
+    const state = Calculator.getState(inputs)
+    expect(state.displayValue).toEqual(10)
+})

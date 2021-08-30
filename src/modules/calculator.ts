@@ -1,5 +1,4 @@
 import {CalculatorInput, CalculatorState, InputType, Operation, OperationsBuilder, OperatorType} from "../config/types";
-import {worker} from "cluster";
 
 
 const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder => {
@@ -8,7 +7,10 @@ const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder
             case InputType.Numeric:
                 const preValue = builder.working?.value || 0
                 const newValue = preValue * 10 + input.value
-                return {...builder, value: newValue}
+                return {
+                    ...builder,
+                    working: {...builder.working, value: newValue}
+                }
 
             case InputType.Operator:
                 if (input.operator === OperatorType.Equals) {
@@ -26,6 +28,17 @@ const getOperationsBuilder = (inputs: Array<CalculatorInput>): OperationsBuilder
     }, {operations: [], working: {operator: OperatorType.Add, value: 0}})
 }
 
+const getTotal = (operations: Array<Operation>): number =>
+    operations.reduce<number>((sum, operations) => {
+        switch (operations.operator) {
+            case OperatorType.Add:
+                return sum + operations.value
+            case OperatorType.Subtract:
+                return sum - operations.value
+            case OperatorType.Equals:
+                return sum
+        }
+    }, 0)
 
 const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
     const builder = getOperationsBuilder(inputs)
@@ -35,13 +48,13 @@ const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
 
     switch (lastOperation.operator) {
         case OperatorType.Equals:
-            const total = operations.reduce<number>((sum, operation) => sum + operation.value, 0)
-            return {displayValue: total}
+            return {displayValue: getTotal(operations)}
 
         default:
             return {displayValue: builder.working.value}
     }
 }
+
 
 const Calculator = {
     getState,
