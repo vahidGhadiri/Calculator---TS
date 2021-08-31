@@ -48,7 +48,8 @@ export const Calculator: React.FC = () => {
                 <Button buttonType={ButtonType.Numeric} label="3" position={[2, 4]} onClick={() => handleNumerical(3)}/>
                 <Button buttonType={ButtonType.Numeric} label="2" position={[1, 4]} onClick={() => handleNumerical(2)}/>
                 <Button buttonType={ButtonType.Numeric} label="1" position={[0, 4]} onClick={() => handleNumerical(1)}/>
-                <Button buttonType={ButtonType.Numeric} label="0" position={[0, 5]} width={3}/>
+                <Button buttonType={ButtonType.Numeric} label="0" position={[0, 5]} width={3}
+                        onClick={() => handleNumerical(0)}/>
             </div>
         </div>
     )
