@@ -29,12 +29,12 @@ export const getOperationsBuilder = (inputs: Array<CalculatorInput>): Operations
 }
 
 export const getTotal = (operations: Array<Operation>): number =>
-    operations.reduce<number>((sum, operations) => {
-        switch (operations.operator) {
+    operations.reduce<number>((sum, operation) => {
+        switch (operation.operator) {
             case OperatorType.Add:
-                return sum + operations.value
+                return sum + operation.value
             case OperatorType.Subtract:
-                return sum - operations.value
+                return sum - operation.value
             case OperatorType.Equals:
                 return sum
         }
@@ -44,7 +44,7 @@ export const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
     const builder = getOperationsBuilder(inputs)
     const {operations} = builder
     const lastOperation = operations.length ? operations[operations.length - 1] : null
-    if (!lastOperation) return {displayValue: 0}
+    if (!lastOperation) return {displayValue: builder.working.value}
 
     switch (lastOperation.operator) {
         case OperatorType.Equals:

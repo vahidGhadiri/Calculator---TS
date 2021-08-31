@@ -28,7 +28,7 @@ test("Has display value 0 with no input", () => {
 })
 
 
-test("Derives display value upon numerical value", () => {
+test("Derives display value upon new numerical value", () => {
     const inputs: Array<CalculatorInput> = [
         {type: InputType.Numeric, value: 1},
         {type: InputType.Numeric, value: 2},
@@ -68,4 +68,10 @@ test("Derives final state (with addition and subtraction)", () => {
 
     const state = Calculator.getState(inputs)
     expect(state.displayValue).toEqual(10)
+})
+
+test("derives displayValue upon first numerical value", () => {
+    const inputs: Array<CalculatorInput> = [{type: InputType.Numeric, value: 1}]
+    const state = Calculator.getState(inputs)
+    expect(state.displayValue).toEqual(1)
 })
