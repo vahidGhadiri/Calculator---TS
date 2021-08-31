@@ -20,14 +20,22 @@ export const Calculator: React.FC = () => {
         appendInput({type: InputType.Operator, operator})
     }
 
+    const handleAllClear = () => {
+        setInputs([])
+    }
+
+    const handleUndo = () => {
+        setInputs((prev) => prev.slice(0, -1))
+    }
+
     return (
         <div className={style.container}>
             <div className={style.grid}>
                 <div className={style.display}>
                     <p>{state.displayValue}</p>
                 </div>
-                <Button label="AC" position={[0, 1]} width={2}/>
-                <Button label="UNDO" position={[2, 1]} width={2}/>
+                <Button label="AC" position={[0, 1]} width={2} onClick={() => handleAllClear()}/>
+                <Button label="UNDO" position={[2, 1]} width={2} onClick={() => handleUndo()}/>
                 <Button label="-" position={[3, 2]} onClick={() => handleOperator(OperatorType.Subtract)}/>
                 <Button label="+" position={[3, 3]} onClick={() => handleOperator(OperatorType.Add)}/>
                 <Button label="=" position={[3, 4]} height={2} onClick={() => handleOperator(OperatorType.Equals)}/>
