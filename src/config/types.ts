@@ -21,7 +21,7 @@ export type Operation = {
 
 export type OperationsBuilder = {
     operations: Operation[]
-    working: Operation
+    working: Operation 
 
 }
 

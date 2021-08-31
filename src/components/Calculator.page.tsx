@@ -2,14 +2,22 @@ import React, {useState} from "react";
 import {getState} from "../modules/calculator"
 import style from "./Calculator.module.scss"
 import {Button} from "./button/Button.component";
-import {ButtonType, CalculatorInput, InputType, Operation} from "../config/types";
+import {ButtonType, CalculatorInput, InputType, OperatorType} from "../config/types";
 
 export const Calculator: React.FC = () => {
     const [inputs, setInputs] = useState<Array<CalculatorInput>>([])
     const state = getState(inputs)
 
+    const appendInput = (input: CalculatorInput): void => {
+        setInputs(prev => [...prev, input])
+    }
+
     const handleNumerical = (value: number): any => {
-        setInputs(prev => [...prev, {type: InputType.Numeric, value}])
+        appendInput({type: InputType.Numeric, value})
+    }
+
+    const handleOperator = (operator: OperatorType) => {
+        appendInput({type: InputType.Operator, operator})
     }
 
     return (
@@ -20,9 +28,9 @@ export const Calculator: React.FC = () => {
                 </div>
                 <Button label="AC" position={[0, 1]} width={2}/>
                 <Button label="UNDO" position={[2, 1]} width={2}/>
-                <Button label="-" position={[3, 2]}/>
-                <Button label="+" position={[3, 3]}/>
-                <Button label="=" position={[3, 4]} height={2}/>
+                <Button label="-" position={[3, 2]} onClick={() => handleOperator(OperatorType.Subtract)}/>
+                <Button label="+" position={[3, 3]} onClick={() => handleOperator(OperatorType.Add)}/>
+                <Button label="=" position={[3, 4]} height={2} onClick={() => handleOperator(OperatorType.Equals)}/>
                 <Button buttonType={ButtonType.Numeric} label="9" position={[2, 2]} onClick={() => handleNumerical(9)}/>
                 <Button buttonType={ButtonType.Numeric} label="8" position={[1, 2]} onClick={() => handleNumerical(8)}/>
                 <Button buttonType={ButtonType.Numeric} label="7" position={[0, 2]} onClick={() => handleNumerical(7)}/>

@@ -44,14 +44,17 @@ export const getState = (inputs: Array<CalculatorInput>): CalculatorState => {
     const builder = getOperationsBuilder(inputs)
     const {operations} = builder
     const lastOperation = operations.length ? operations[operations.length - 1] : null
+    const lastInput = inputs.length ? inputs[inputs.length - 1] : null
+    const total = getTotal(operations)
+
     if (!lastOperation) return {displayValue: builder.working.value}
 
     switch (lastOperation.operator) {
         case OperatorType.Equals:
-            return {displayValue: getTotal(operations)}
+            return {displayValue: total}
 
         default:
-            return {displayValue: builder.working.value}
+            return {displayValue: lastInput && lastInput.type === InputType.Numeric ? builder.working.value : total}
     }
 }
 
